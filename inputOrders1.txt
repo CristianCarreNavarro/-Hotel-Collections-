@@ -1,0 +1,4 @@
+PROBLEM 001
+REQUEST 003 piscina,bar,bar
+LEAVE 003 500€
+RESERVATION 234 5 satelite

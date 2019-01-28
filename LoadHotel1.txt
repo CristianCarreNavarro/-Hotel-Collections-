@@ -1,0 +1,26 @@
+SPEED 2000
+ROOM 001 3 tv,jacuzzi,balcon
+ROOM 002 2 tv,camadoble
+ROOM 003 1 tv,balcon
+ROOM 002 4 tv
+ROOM 004 4 
+ROOM 011 2 camadoble
+ROOM 012 5 balcon,jacuzzi
+ROOM 013 4 minibar,jacuzzi
+ROOM 014 1 telefono
+ROOM 015 2 satelite,sweet,tv,balcon
+ROOM 021 4 tv
+ROOM 022 12
+ROOM 023 3 satelite,telefono,sweet
+ROOM 024 2 camadoble,jacuzzi,balcon,sweet
+ROOM 025 1 minibar,tv,telefono,satelite
+WORKER 47552578 Antonio limpieza,mantenimiento
+WORKER 47554784 Rodrigo piscina,mantenimiento,bar
+WORKER 45221598 Maria comida,bar
+WORKER 45221698
+RESERVATION 45874478 1 balcon
+RESERVATION 45874478 2 tv
+RESERVATION 45874478 4 tv,camadoble
+RESERVATION 45874478 3 balcon
+RESERVATION 45874478 1
+HOTEL

@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import model.Customer;
@@ -34,7 +33,7 @@ public class Manager_Hotel {
     Map businessWorkers;
     HashSet<Room> listRoomsCLEAN = new HashSet<>();
 
-    ArrayList<Room> listRooms = new ArrayList<>();
+    HashSet<Room> listRooms = new HashSet<>();
     HashSet<Worker> listWorkers = new HashSet<>();
     HashSet<Customer> listCustomers = new HashSet<>();
 
@@ -48,7 +47,6 @@ public class Manager_Hotel {
 
     public enum skillsWorkers {
         MANTENIMIENTO, LIMPIEZA, PISCINA, SPA, BAR, COMIDA, LAVANDERIA;
-
     }
 
     public void readOrdersHotel(File file) throws HotelExcepcion, IOException {
@@ -197,7 +195,9 @@ public class Manager_Hotel {
                 System.out.println("RESERVATION " + datos_separados[1] + " " + datos_separados[2] + " " + datos_separados[3]);
 
                 Room roomAsigned = asignTheBestRoom(newCustomer);
-                System.out.println(green + "--> Assigned " + datos_separados[1] + " to Room " + roomAsigned.getNumberRoom() + " <--" + resett);
+                if (roomAsigned != null) {
+                    System.out.println(green + "--> Assigned " + datos_separados[1] + " to Room " + roomAsigned.getNumberRoom() + " <--" + resett);
+                }
                 break;
             case 3:
                 newCustomer = new Customer(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]));
@@ -205,7 +205,9 @@ public class Manager_Hotel {
                 System.out.println("RESERVATION " + datos_separados[1] + " " + datos_separados[2]);
 
                 roomAsigned = asignTheBestRoom(newCustomer);
-                System.out.println(green + "-->Assigned " + datos_separados[1] + " to Room " + roomAsigned.getNumberRoom() + " <--" + resett);
+                if (roomAsigned != null) {
+                    System.out.println(green + "-->Assigned " + datos_separados[1] + " to Room " + roomAsigned.getNumberRoom() + " <--" + resett);
+                }
                 break;
 
             default:
@@ -253,10 +255,9 @@ public class Manager_Hotel {
                     asigned = true;
                     break;
                 }
-           
 
             }
-          
+
         }
         if (sameCapacity == false) {
             for (Room room1 : listRoomsCLEAN) {
@@ -272,11 +273,12 @@ public class Manager_Hotel {
                         break;
                     }
                 }
+
             }
         }
 
         if (asigned == false) {
-            System.out.println("--> Customer not asigned. You loose 100E <--");
+            System.out.println(red + "--> Customer not asigned. You loose 100E <--" + resett);
             money -= 100;
             roomAsign = null;
         }
@@ -287,19 +289,32 @@ public class Manager_Hotel {
     public boolean haveALLwantCustomer(Room room1, Customer customer) {
 
         HashSet<String> listservicesofRoom = new HashSet<>();
+
         boolean roomHaveAll = false;
         listservicesofRoom = room1.getService();
 
-        if (listservicesofRoom.containsAll(customer.getServicesCustomer())) {
-            
-            roomHaveAll = true;
+
+        /*System.out.println("Habitacion: " + room1.getNumberRoom());
+        for (String service : listservicesofRoom) {
+
+            System.out.println(blue + "servicioHabitacion : " + service);
         }
 
+        System.out.println(red + "servicioCustomer num:" + customer.getServicesCustomer() );
+
+         */
+        if ((listservicesofRoom != null) && (customer.getServicesCustomer() != null)) {
+
+            if (listservicesofRoom.containsAll(customer.getServicesCustomer())) {
+
+                roomHaveAll = true;
+            }
+        }
         return roomHaveAll;
     }
 
     public void showHotel() {
-        System.out.println(red + "HOTEL");
+        System.out.println(red + "\nHOTEL");
         System.out.println(red + "====================================");
 
         for (Room room : listRooms) {
