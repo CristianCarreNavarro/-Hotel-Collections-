@@ -26,7 +26,7 @@ public class Hotel_Stucom {
         try {
 
             manager.readOrdersHotel(document1);
-        //    manager.readOrdersHotel(document2);
+           manager.readOrdersHotel(document2);
             
         
         

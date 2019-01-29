@@ -24,6 +24,9 @@ public class Customer {
         this.servicesCustomer = servicesCustomer;
 
     }
+    public Customer(){
+        
+    }
     public Customer(int idCustomer, int capacityCustomer){
          this.idCustomer = idCustomer;
         this.capacityCustomer = capacityCustomer;
