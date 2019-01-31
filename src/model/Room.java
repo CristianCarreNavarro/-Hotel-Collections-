@@ -6,6 +6,7 @@
 package model;
 
 import Manager.Manager_Hotel.statusRoom;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -19,14 +20,24 @@ public class Room {
     private HashSet service;
     private statusRoom status;
     private String customer;
+    private HashMap workersAsign;
 
-    public Room(int numberRoom, int capacity, HashSet service, statusRoom status,String customer) {
+    public Room(int numberRoom, int capacity, HashSet service, statusRoom status,String customer,HashMap workerAsign) {
         this.numberRoom = numberRoom;
         this.capacity = capacity;
         this.service = service;
         this.status = status;
         this.customer = customer;
+        this.workersAsign = workerAsign;
 
+    }
+
+    public HashMap getWorkerAsign() {
+        return workersAsign;
+    }
+
+    public void setWorkerAsign(HashMap workerAsign) {
+        this.workersAsign = workerAsign;
     }
 
     public Room() {

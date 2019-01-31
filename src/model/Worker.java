@@ -6,7 +6,6 @@
 package model;
 
 import java.util.HashSet;
-import java.util.Map;
 
 /**
  *
@@ -22,6 +21,10 @@ public class Worker {
         this.idWorker = iDWorker;
         this.nameWorker = nameWorker;
         this.skills = skills;
+    }
+
+    public Worker() {
+
     }
 
     public Worker(int iDWorker) {
