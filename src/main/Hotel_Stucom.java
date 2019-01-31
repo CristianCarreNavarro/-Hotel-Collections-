@@ -25,7 +25,7 @@ public class Hotel_Stucom {
         File document2 = new File("inputOrders1.txt");
         try {
 
-            manager.readOrdersHotel(document1);
+           manager.readOrdersHotel(document1);
            manager.readOrdersHotel(document2);
             
         

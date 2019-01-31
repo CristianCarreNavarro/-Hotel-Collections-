@@ -41,16 +41,83 @@ public class Manager_Hotel {
     HashMap<Integer, Customer> listCustomers = new HashMap<>();
     HashMap<Integer, Customer> listRequest = new HashMap<>();
 
-    public enum statusRoom {
+    public enum StatusRoom {
         CLEAN, UNCLEAN, BROKEN, RESERVED;
     }
 
-    public enum serviceRooms {
+    public enum ServiceRooms {
         TV, BALCON, CAMADOBLE, JACUZZI, MINIBAR, TELEFONO, SATELITE, SWEET;
+
+        public static ServiceRooms getServiceRoom(String stringofService) {
+
+            switch (stringofService.toUpperCase()) {
+
+                case "TV":
+                    return ServiceRooms.TV;
+
+                case "BALCON":
+                    return ServiceRooms.BALCON;
+
+                case "CAMADOBLE":
+                    return ServiceRooms.CAMADOBLE;
+
+                case "JACUZZI":
+                    return ServiceRooms.JACUZZI;
+
+                case "MINIBAR":
+                    return ServiceRooms.MINIBAR;
+
+                case "TELEFONO":
+                    return ServiceRooms.TELEFONO;
+
+                case "SATELITE":
+                    return ServiceRooms.SATELITE;
+
+                case "SWEET":
+                    return ServiceRooms.SWEET;
+
+                default:
+                    break;
+            }
+            return null;
+        }
+
     }
 
-    public enum skillsWorkers {
+    public enum SkillsWorkers {
         MANTENIMIENTO, LIMPIEZA, PISCINA, SPA, BAR, COMIDA, LAVANDERIA;
+
+        public static SkillsWorkers getSkillsWorkers(String stringofSkill) {
+
+            switch (stringofSkill.toUpperCase()) {
+
+                case "MANTENIMIENTO":
+                    return SkillsWorkers.MANTENIMIENTO;
+
+                case "BALCON":
+                    return SkillsWorkers.LIMPIEZA;
+
+                case "CAMADOBLE":
+                    return SkillsWorkers.PISCINA;
+
+                case "JACUZZI":
+                    return SkillsWorkers.SPA;
+
+                case "MINIBAR":
+                    return SkillsWorkers.BAR;
+
+                case "TELEFONO":
+                    return SkillsWorkers.COMIDA;
+
+                case "SATELITE":
+                    return SkillsWorkers.LAVANDERIA;
+
+                default:
+                    break;
+            }
+            return null;
+        }
+
     }
 
     public void readOrdersHotel(File file) throws HotelExcepcion, IOException {
@@ -102,7 +169,7 @@ public class Manager_Hotel {
 
                 case "ROOM":
 
-                    roomCreate(datos_separados);
+                    createRoom(datos_separados);
                     break;
 
                 case "WORKER":
@@ -141,22 +208,22 @@ public class Manager_Hotel {
 
     }
 
-    public void roomCreate(String datos_separados[]) {
+    public void createRoom(String datos_separados[]) {
 
         HashSet<String> listservices = new HashSet<>();
 
         if (datos_separados.length == 4) {
 
-            listservices = getListofServicesorSkills(datos_separados[3]);
+            listservices = getListofServicesorSkills("services", datos_separados[3]);
 
-            Room newRoom = new Room(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]), listservices, statusRoom.CLEAN, "EMPTY", null);
+            Room newRoom = new Room(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]), listservices, StatusRoom.CLEAN, "EMPTY", null);
 
             listRooms.put(newRoom.getNumberRoom(), newRoom);
             System.out.println("ROOM " + datos_separados[1] + " " + datos_separados[2] + " " + datos_separados[3]);
 
         } else {
 
-            Room newRoom = new Room(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]), statusRoom.CLEAN, "EMPTY");
+            Room newRoom = new Room(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]), StatusRoom.CLEAN, "EMPTY");
 
             listRooms.put(newRoom.getNumberRoom(), newRoom);
             System.out.println("ROOM " + datos_separados[1] + " " + datos_separados[2]);
@@ -168,27 +235,30 @@ public class Manager_Hotel {
 
     public void insertWorker(String datos_separados[]) throws HotelExcepcion {
 
-        HashSet<String> listSkills = new HashSet<>();
+        HashSet<Enum> listSkills = new HashSet<>();
 
         switch (datos_separados.length) {
 
             case 4:
-                listSkills = getListofServicesorSkills(datos_separados[3]);
+                listSkills = getListofServicesorSkills("skills", datos_separados[3]);
 
                 Worker newWorker = new Worker(Integer.parseInt(datos_separados[1]), datos_separados[2], listSkills);
                 listWorkers.put(newWorker.getiDWorker(), newWorker);
+                listWorkersNoBussy.put(newWorker.getiDWorker(), newWorker);
                 System.out.println("WORKER " + datos_separados[1] + " " + datos_separados[2] + " " + datos_separados[3]);
                 System.out.println(green + "--> new Worker added " + datos_separados[2] + " <--" + resett);
                 break;
             case 3:
                 newWorker = new Worker(Integer.parseInt(datos_separados[1]), datos_separados[2]);
                 listWorkers.put(newWorker.getiDWorker(), newWorker);
+                listWorkersNoBussy.put(newWorker.getiDWorker(), newWorker);
                 System.out.println("WORKER " + datos_separados[1] + " " + datos_separados[2]);
                 System.out.println(green + "--> new Worker added " + datos_separados[2] + " <--" + resett);
                 break;
             case 2:
                 newWorker = new Worker(Integer.parseInt(datos_separados[1]));
                 listWorkers.put(newWorker.getiDWorker(), newWorker);
+                listWorkersNoBussy.put(newWorker.getiDWorker(), newWorker);
                 System.out.println("WORKER " + datos_separados[1]);
                 System.out.println(green + "--> new Worker added " + datos_separados[1] + " <--" + resett);
                 break;
@@ -203,44 +273,38 @@ public class Manager_Hotel {
     public void insertReservation(String datos_separados[]) throws HotelExcepcion {
 
         HashSet<String> listservices = new HashSet<>();
+        
+        try {
+            switch (datos_separados.length) {
 
-        switch (datos_separados.length) {
+                case 4:
 
-            case 4:
+                    listservices = getListofServicesorSkills("services", datos_separados[3]);
 
-                listservices = getListofServicesorSkills(datos_separados[3]);
+                    Customer newCustomer = new Customer(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]), listservices);
 
-                Customer newCustomer = new Customer(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]), listservices);
-                listCustomers.put(newCustomer.getIdCustomer(), newCustomer);
-                System.out.println("RESERVATION " + datos_separados[1] + " " + datos_separados[2] + " " + datos_separados[3]);
+                    listCustomers.put(newCustomer.getIdCustomer(), newCustomer);
+                    System.out.println("RESERVATION " + datos_separados[1] + " " + datos_separados[2] + " " + datos_separados[3]);
 
-                asignTheBestRoom(newCustomer);
+                    asignTheBestRoom(newCustomer);
 
-                break;
-            case 3:
-                newCustomer = new Customer(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]));
-                listCustomers.put(newCustomer.getIdCustomer(), newCustomer);
-                System.out.println("RESERVATION " + datos_separados[1] + " " + datos_separados[2]);
-                asignTheBestRoom(newCustomer);
+                    break;
+                case 3:
+                    newCustomer = new Customer(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]));
+                    listCustomers.put(newCustomer.getIdCustomer(), newCustomer);
+                    System.out.println("RESERVATION " + datos_separados[1] + " " + datos_separados[2]);
+                    asignTheBestRoom(newCustomer);
 
-                break;
+                    break;
 
-            default:
-                throw new HotelExcepcion(3);
+                default:
+                    throw new HotelExcepcion(3);
 
+            }
+        } catch (HotelExcepcion e) {
+            throw new HotelExcepcion(1);
         }
 
-    }
-
-    public HashSet getListofServicesorSkills(String datos) {
-        HashSet<String> list = new HashSet<>();
-        String services = datos;
-        String listString[] = services.split(",");
-
-        for (String string : listString) {
-            list.add(string);
-        }
-        return list;
     }
 
     public Room asignTheBestRoom(Customer customer) {
@@ -250,7 +314,7 @@ public class Manager_Hotel {
 
         for (Integer room1 : listRooms.keySet()) {
 
-            if (listRooms.get(room1).getStatus() == statusRoom.CLEAN) {
+            if (listRooms.get(room1).getStatus() == StatusRoom.CLEAN) {
 
                 listRoomsCLEAN.put(listRooms.get(room1).getNumberRoom(), listRooms.get(room1));
             }
@@ -264,7 +328,7 @@ public class Manager_Hotel {
 
                     listRooms.get(room1).setCustomer(Integer.toString(customer.getIdCustomer()));
 
-                    listRooms.get(room1).setStatus(statusRoom.RESERVED);
+                    listRooms.get(room1).setStatus(StatusRoom.RESERVED);
                     listRoomsCLEAN.remove(room1);
                     sameCapacity = true;
                     roomAsign = listRooms.get(room1);
@@ -282,7 +346,7 @@ public class Manager_Hotel {
                     if (haveALLwantCustomer(listRooms.get(room1), customer)) {
 
                         listRooms.get(room1).setCustomer(Integer.toString(customer.getIdCustomer()));
-                        listRooms.get(room1).setStatus(statusRoom.RESERVED);
+                        listRooms.get(room1).setStatus(StatusRoom.RESERVED);
                         listRoomsCLEAN.remove(room1);
                         roomAsign = listRooms.get(room1);
                         asigned = true;
@@ -346,9 +410,9 @@ public class Manager_Hotel {
 
         romBroken = listRooms.get(Integer.parseInt(datos_separados[1]));
 
-        romBroken.setStatus(statusRoom.BROKEN);
+        romBroken.setStatus(StatusRoom.BROKEN);
 
-        customerTochange = checkCustomer(romBroken);
+        customerTochange = checkCustomerinRoom(romBroken);
 
         if (customerTochange != null) {
 
@@ -359,7 +423,7 @@ public class Manager_Hotel {
 
     }
 
-    public Customer checkCustomer(Room romBroken) {
+    public Customer checkCustomerinRoom(Room romBroken) {
         int check = 0;
         Customer customerTochange = new Customer();
         for (Integer id : listCustomers.keySet()) {
@@ -398,7 +462,7 @@ public class Manager_Hotel {
         String moneyOfCustomer = datos_separados[2].substring(0, datos_separados[2].length() - 1);
 
         romFree = listRooms.get(Integer.parseInt(datos_separados[1]));
-        customerToLeave = checkCustomer(romFree);
+        customerToLeave = checkCustomerinRoom(romFree);
         romFree.setCustomer("EMPTY");
 
         if (romFree.getWorkerAsign() != null) {
@@ -408,11 +472,10 @@ public class Manager_Hotel {
             for (Integer key : listWorkersAsigned.keySet()) {
                 System.out.println(green + "--> Worker " + listWorkersAsigned.get(key).getNameWorker() + " desasigned<--" + resett);
             }
-
             romFree.setWorkerAsign(null);
         }
 
-        romFree.setStatus(statusRoom.UNCLEAN);
+        romFree.setStatus(StatusRoom.UNCLEAN);
         System.out.println(purple + "--> Room number: " + datos_separados[1] + " free and set to UNCLEAN <--");
 
         for (Integer key : listRequest.keySet()) {
@@ -427,7 +490,6 @@ public class Manager_Hotel {
             if (check == 2) {
                 double moneyHalf = Integer.parseInt(moneyOfCustomer) / 2;
                 System.out.println(purple + "--> Unsatisfied clients.You loose " + moneyHalf + " E" + resett);
-
             } else {
                 check = 0;
             }
@@ -435,57 +497,75 @@ public class Manager_Hotel {
 
     }
 
+    public HashSet getListofServicesorSkills(String option, String datos) {
+
+        HashSet<Enum> list = new HashSet<>();
+        String services = datos;
+
+        String listString[] = services.split(",");
+
+        if (option.equalsIgnoreCase("services")) {
+
+            for (String string : listString) {
+                list.add(ServiceRooms.getServiceRoom(string));
+            }
+        } else {
+
+            for (String string : listString) {
+                list.add(SkillsWorkers.getSkillsWorkers(string));
+            }
+        }
+        return list;
+    }
+
     public void requestOfRoom(String datos_separados[]) throws HotelExcepcion {
 
         Room rom = new Room();
         Customer customer = new Customer();
-        HashSet<String> listservices = new HashSet<>();
+        HashSet<Enum> listofRequest = new HashSet<>();
 
         if (datos_separados.length < 2) {
             throw new HotelExcepcion(2);
         }
 
-        listservices = getListofServicesorSkills(datos_separados[2]);
+        listofRequest = getListofServicesorSkills("skills", datos_separados[2]);
 
-        for (String key1 : listservices) {
+        for (Enum req : listofRequest) {
 
-            //QUIERES DEVOLVER UNA CONSTACIA DEL ENUM Y TE DEVUELVE 1
-            skillsWorkers serviceCustomer = Enum.valueOf(skillsWorkers.class, key1);
-            Worker worker = findWorkerToService(serviceCustomer);
-            
+            Worker worker = findWorkerToService(req);
+
             if (worker != null) {
                 System.out.println("--> Worker " + worker.getNameWorker() + " assigned to Room " + datos_separados[1] + "<--");
             } else {
-                  rom = listRooms.get(Integer.parseInt(datos_separados[1]));
-              customer = checkCustomer(rom);
+                rom = listRooms.get(Integer.parseInt(datos_separados[1]));
+                customer = checkCustomerinRoom(rom);
                 listRequest.put(customer.getIdCustomer(), customer);
                 System.out.println("--> No Worker avaliable for this Service. Added to Customer pending Requests <--");
             }
         }
     }
 
-    public Worker findWorkerToService(skillsWorkers serviceCutomer) {
+    public Worker findWorkerToService(Enum key) {
+
         Worker worker = new Worker();
-        HashSet<String> listservicesWorker = new HashSet<>();
+        HashSet<Enum> listservicesWorker = new HashSet<>();
 
-        for (Integer key2 : listWorkersNoBussy.keySet()) {
+        for (Integer work : listWorkersNoBussy.keySet()) {
 
-            listservicesWorker = listWorkersNoBussy.get(key2).getSkills();
+            listservicesWorker = listWorkersNoBussy.get(work).getSkills();
 
-            for (String key3 : listservicesWorker) {
+            if (listservicesWorker != null) {
 
-                skillsWorkers serviceWorker = Enum.valueOf(skillsWorkers.class, key3);
-
-                boolean idemServices = serviceCutomer.name().equalsIgnoreCase(serviceWorker.name());
+                boolean idemServices = listservicesWorker.contains(key);
 
                 if (idemServices) {
-                    listWorkersNoBussy.remove(key2);
-                    worker = listWorkersNoBussy.get(key2);
+                    listWorkersNoBussy.remove(work);
+                    worker = listWorkersNoBussy.get(work);
                     return worker;
                 }
             }
-
         }
+
         return worker;
     }
 }
