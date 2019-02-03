@@ -27,14 +27,27 @@ public class HotelExcepcion extends Exception {
 
         switch (errorCode) {
             case 1:
-                message = red + "< Error 1 >" + resett;
+                message = red + "\n< Wrong identifier for worker  >" + resett;
                 break;
             case 2:
-                message = red + "< Incorrect Parameter >" + resett;
+                message = red + "\n< Wrong Parameter >" + resett;
                 break;
             case 3:
-                message = red + "< Incorrect option >" + resett;
+                message = red + "\n< Incorrect option >" + resett;
                 break;
+            case 4:
+                message = red + "\n< No ROOM 13 can be added >" + resett;
+                break;
+            case 5:
+                message = red + "\n< Wrong number of Parameter >" + resett;
+                break;
+            case 6:
+                message = red + "\n< Wrong Worker >" + resett;
+                break;
+            case 7:
+                message = red + "\n< Wrong identifier for reservation >" + resett;
+                break;
+
         }
         return message;
     }

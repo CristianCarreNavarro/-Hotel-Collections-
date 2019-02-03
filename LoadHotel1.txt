@@ -1,4 +1,4 @@
-SPEED 2000
+SPEED 1000
 ROOM 001 3 tv,jacuzzi,balcon
 ROOM 002 2 tv,camadoble
 ROOM 003 1 tv,balcon
@@ -7,20 +7,34 @@ ROOM 004 4
 ROOM 011 2 camadoble
 ROOM 012 5 balcon,jacuzzi
 ROOM 013 4 minibar,jacuzzi
-ROOM 014 1 telefono
+room 014 1 telefono
 ROOM 015 2 satelite,sweet,tv,balcon
-ROOM 021 4 tv
+Room 021 4 tv
 ROOM 022 12
-ROOM 023 3 satelite,telefono,sweet,balcon
+ROOM 023 3 satelite,telefono,sweet
 ROOM 024 2 camadoble,jacuzzi,balcon,sweet
 ROOM 025 1 minibar,tv,telefono,satelite
+Roon 026 2 tv
+ROOM 026 4 tv,tv,tv,tv,tv
+ROOM 113 7 camadoble,balcon,tv,telefono,satelite,sweet
 WORKER 47552578 Antonio limpieza,mantenimiento
 WORKER 47554784 Rodrigo piscina,mantenimiento,bar
+WORKER 475584 Matilda bar,tv
 WORKER 45221598 Maria comida,bar
-WORKER 45221698
+WORKER 45221698 Pedro
+WORKER 45221598 Maria comida
+WORKER 45221598 
+WORKER 45F215y8 Jose comida,piscina
+WORKER 47555898 Josemiguel spa
 RESERVATION 45874478 1 balcon
-RESERVATION 45874478 2 tv
-RESERVATION 45874477 4 tv,camadoble
-RESERVATION 45874477 3 balcon
-RESERVATION 45874478 1
+RESERVATION 45874479 2 tv
+RESERVATION 42874478 4 tv,camadoble
+RESERVATION 45974478 3 balcon
+RESERVATION 478854 7 camadoble
+RESERVATION 45874978 1
+RESERVATION 49874478 3 camadoble
+RESERVATION 49874478 3 tv
+RESERVATION 4A8754P8 5 balcon
+
+HOLA
 HOTEL
