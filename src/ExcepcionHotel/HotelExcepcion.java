@@ -47,7 +47,12 @@ public class HotelExcepcion extends Exception {
             case 7:
                 message = red + "\n< Wrong identifier for reservation >" + resett;
                 break;
-
+            case 8:
+                message = red + "\n< Wrong Customer >" + resett;
+                break;
+            case 9:
+                message = red + "\n< This Customer is pending Requests>" + resett;
+                break;
         }
         return message;
     }

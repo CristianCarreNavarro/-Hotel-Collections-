@@ -19,36 +19,34 @@ public class Room {
     private int capacity;
     private HashSet service;
     private StatusRoom status;
-    private String customer;
-    private HashMap workersAsign;
-
-    public Room(int numberRoom, int capacity, HashSet service, StatusRoom status,String customer,HashMap workerAsign) {
-        this.numberRoom = numberRoom;
-        this.capacity = capacity;
-        this.service = service;
-        this.status = status;
-        this.customer = customer;
-        this.workersAsign = workerAsign;
-
-    }
-
-    public HashMap getWorkerAsign() {
-        return workersAsign;
-    }
-
-    public void setWorkerAsign(HashMap workerAsign) {
-        this.workersAsign = workerAsign;
-    }
+    private HashSet workersAsign;
 
     public Room() {
 
     }
 
-    public Room(int numberRoom, int capacity, StatusRoom status,String customer) {
+    public Room(int numberRoom, int capacity, HashSet service, StatusRoom status, HashSet workerAsign) {
+        this.numberRoom = numberRoom;
+        this.capacity = capacity;
+        this.service = service;
+        this.status = status;
+        this.workersAsign = workerAsign;
+
+    }
+
+    public HashSet getWorkerAsign() {
+        return workersAsign;
+    }
+
+    public void setWorkerAsign(HashSet workerAsign) {
+        this.workersAsign = workerAsign;
+    }
+
+    public Room(int numberRoom, int capacity, StatusRoom status, String customer) {
         this.numberRoom = numberRoom;
         this.capacity = capacity;
         this.status = status;
-                this.customer = customer;
+      
 
     }
 
@@ -84,15 +82,6 @@ public class Room {
         this.capacity = capacity;
     }
 
-    public String getCustomer() {
-        return customer;
-    }
+  
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-    
-    
-    
 }

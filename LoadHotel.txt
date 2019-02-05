@@ -11,7 +11,7 @@ ROOM 014 1 telefono
 ROOM 015 2 satelite,sweet,tv,balcon
 ROOM 021 4 tv
 ROOM 022 12
-ROOM 023 3 satelite,telefono,sweet,balcon
+ROOM 023 3 satelite,telefono,sweet,balcon,camadoble
 ROOM 024 2 camadoble,jacuzzi,balcon,sweet
 ROOM 025 1 minibar,tv,telefono,satelite
 WORKER 47552578 Antonio limpieza,mantenimiento

@@ -11,7 +11,7 @@ room 014 1 telefono
 ROOM 015 2 satelite,sweet,tv,balcon
 Room 021 4 tv
 ROOM 022 12
-ROOM 023 3 satelite,telefono,sweet
+ROOM 023 3 satelite,telefono,sweet,camadoble
 ROOM 024 2 camadoble,jacuzzi,balcon,sweet
 ROOM 025 1 minibar,tv,telefono,satelite
 Roon 026 2 tv

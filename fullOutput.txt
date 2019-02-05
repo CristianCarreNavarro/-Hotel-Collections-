@@ -23,7 +23,7 @@ Room 021 4 tv
 --> new Room added 021 <--
 ROOM 022 12
 --> new Room added 022 <--
-ROOM 023 3 satelite,telefono,sweet
+ROOM 023 3 satelite,telefono,sweet,camadoble
 --> new Room added 023 <--
 ROOM 024 2 camadoble,jacuzzi,balcon,sweet
 --> new Room added 024 <--
