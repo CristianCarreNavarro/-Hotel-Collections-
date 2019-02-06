@@ -171,9 +171,6 @@ public class Manager_Hotel {
 
         String datos_separados[] = frase.split(" ");
 
-        for (int i = 0; i < datos_separados.length - 1; i++) {
-
-        }
         for (int i = 0; i < datos_separados.length; i++) {
             System.out.print(datos_separados[i] + " ");
         }
@@ -368,21 +365,21 @@ public class Manager_Hotel {
 
         listofSkillsWantCustomer = getListofSkills(datos_separados[2]);
 
-        
         for (Enum skill : listofSkillsWantCustomer) {
-        
+
+            //System.out.println("\n" + yellow + "SKILL:" + skill + resett);
             worker = findWorkerToThisSkill(skill);
 
             if (worker != null) {
 
                 listofWorkerswithThisSkills.add(worker);
                 System.out.println("\n" + green + "--> Worker " + worker.getNameWorker() + " assigned to Room " + datos_separados[1] + "<--" + resett);
-
+                room.setWorkerAsign(listofWorkerswithThisSkills);
             } else {
                 listPendingRequest.put(room, customer);
                 System.out.println("\n" + purple + "--> No Worker avaliable for " + yellow + skill + purple + " Service. Added to Customer pending Requests <--" + resett);
             }
-            room.setWorkerAsign(listofWorkerswithThisSkills);
+
         }
 
     }
@@ -393,8 +390,7 @@ public class Manager_Hotel {
         Queue<Enum> queue = new LinkedList<Enum>();
 
         if (!datos.contains(",")) {
-            queue.add(ServiceRooms.getServiceRoom(datos));
-   
+            queue.add(SkillsWorkers.getSkillsWorkers(datos));
 
         } else {
             String listString[] = datos.split(",");
@@ -447,7 +443,7 @@ public class Manager_Hotel {
             System.out.println("\n" + purple + "--> Unsatisfied clients.You loose " + moneyHalf + " €" + resett);
             listPendingRequest.remove(roomFree);
         } else {
-            System.out.println("\n" + green + "--> Customer gave you " + moneyOfCustomer + " € <--");
+            System.out.println("\n" + green + "--> Customer gave you " + moneyOfCustomer + " € <--" + resett);
             listPendingRequest.remove(roomFree);
         }
 
@@ -531,10 +527,7 @@ public class Manager_Hotel {
     public Worker findWorkerToThisSkill(Enum skill) {
 
         for (Worker worker1 : listWorkers) {
-            //System.out.println("\n" + yellow + worker1.getNameWorker() + " Skills:" + worker1.getSkills());
-
             if (!listWorkersBussy.contains(worker1)) {
-                System.out.println("workerName: " + worker1.getNameWorker());
                 if (worker1.getSkills().contains(skill)) {
 
                     listWorkersBussy.add(worker1);
