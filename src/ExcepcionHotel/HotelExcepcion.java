@@ -51,7 +51,10 @@ public class HotelExcepcion extends Exception {
                 message = red + "\n< Wrong Customer >" + resett;
                 break;
             case 9:
-                message = red + "\n< This Customer is pending Requests>" + resett;
+                message = red + "\n< This Customer is pending Requests >" + resett;
+                break;
+            case 10:
+                message = red + "\n<  ERROR no customer in this Room >" + resett;
                 break;
         }
         return message;

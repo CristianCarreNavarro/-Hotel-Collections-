@@ -5,7 +5,7 @@
  */
 package model;
 
-import java.util.HashSet;
+import java.util.Queue;
 
 /**
  *
@@ -15,9 +15,9 @@ public final class Worker {
 
     private int idWorker;
     private String nameWorker;
-    private HashSet skills;
+    private Queue skills;
 
-    public Worker(int iDWorker, String nameWorker, HashSet skills) {
+    public Worker(int iDWorker, String nameWorker, Queue skills) {
         setiDWorker(iDWorker);
         this.nameWorker = nameWorker;
         this.skills = skills;
@@ -57,11 +57,11 @@ public final class Worker {
         this.nameWorker = nameWorker;
     }
 
-    public HashSet getSkills() {
+    public Queue getSkills() {
         return skills;
     }
 
-    public void setSkills(HashSet skills) {
+    public void setSkills(Queue skills) {
         this.skills = skills;
     }
 
