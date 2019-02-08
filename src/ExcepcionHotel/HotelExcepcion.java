@@ -56,6 +56,9 @@ public class HotelExcepcion extends Exception {
             case 10:
                 message = red + "\n<  ERROR no customer in this Room >" + resett;
                 break;
+            case 11:
+                message = red + "\n<  Wrong number of Room >" + resett;
+                break;
         }
         return message;
     }

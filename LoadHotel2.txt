@@ -11,7 +11,7 @@ room 014 1 telefono
 ROOM 015 2 satelite,sweet,tv,balcon
 Room 021 4 tv
 ROOM 022 12
-ROOM 023 3 satelite,telefono,sweet,camadoble
+ROOM 023 3 satelite,telefono,sweet
 ROOM 024 2 camadoble,jacuzzi,balcon,sweet
 ROOM 025 1 minibar,tv,telefono,satelite
 Roon 026 2 tv
@@ -25,7 +25,7 @@ WORKER 45221698 Pedro
 WORKER 45221598 Maria comida
 WORKER 45221598 
 WORKER 45F215y8 Jose comida,piscina
-WORKER 47555898 Josemiguel spa,spa
+WORKER 47555898 Josemiguel spa
 RESERVATION 45874478 1 balcon
 RESERVATION 45874479 2 tv
 RESERVATION 42874478 4 tv,camadoble

@@ -44,15 +44,16 @@ public class Manager_Hotel {
     HashSet<Customer> listCustomers = new HashSet<>();
     HashMap<Room, Customer> listPendingRequest = new HashMap<>();
 
-    
     /**
      * Función que recibe un File como parametro<br>
      * y lo va leyendo linea a linea<br>
      * con cada linea llama a otra función(toDoWithPhrase) <br>
-     * con la cual al devolver la variable noMoney en true tambien dejara de leer el File
-    * @param file
+     * con la cual al devolver la variable noMoney en true tambien dejara de
+     * leer el File
+     *
+     * @param file
      * @throws HotelExcepcion
-     * @throws IOException 
+     * @throws IOException
      */
     public void readOrdersHotel(File file) throws HotelExcepcion, IOException {
 
@@ -88,14 +89,16 @@ public class Manager_Hotel {
             }
         }
     }
-/**
- * Función que realiza una opcion determinada<br>
- * según el primer parametro
- * de un array de String creado mediante el String frase pasado
- * @param frase
- * @return noMoney boolean
- * @throws HotelExcepcion 
- */
+
+    /**
+     * Función que realiza una opcion determinada<br>
+     * según el primer parametro de un array de String creado mediante el String
+     * frase pasado
+     *
+     * @param frase
+     * @return noMoney boolean
+     * @throws HotelExcepcion
+     */
     public boolean toDoWithPhrase(String frase) throws HotelExcepcion {
 
         String datos_separados[] = frase.split(" ");
@@ -103,7 +106,7 @@ public class Manager_Hotel {
         for (String palabra : datos_separados) {
             System.out.print(palabra + " ");
         }
-        
+
         try {
             switch (datos_separados[0].toUpperCase()) {
 
@@ -111,6 +114,7 @@ public class Manager_Hotel {
                     if (2 != datos_separados.length) {
                         throw new HotelExcepcion(2);
                     }
+                    System.out.println("\n");
                     break;
 
                 case "ROOM":
@@ -156,29 +160,34 @@ public class Manager_Hotel {
 
     //----------------------------------------------------------------------ROOM------------------------------------------------------------------------------------------------------------------------------
     //*********************************************************************************************************
-  
     /**
-     * Función que crea una Room y la añade a una Coleccion de Habitaciones<br> 
+     * Función que crea una Room y la añade a una Coleccion de Habitaciones<br>
      * comprobando antes que largura tienen los paramteros pasados <br>
      * además MUY importante comprueba que no sea la numero 13
+     *
      * @param datos_separados
-     * @throws HotelExcepcion 
+     * @throws HotelExcepcion
      */
-    
     public void createRoom(String datos_separados[]) throws HotelExcepcion {
 
         HashSet<String> listservices = new HashSet<>();
         Customer customer = new Customer();
-        
+
         if (datos_separados[1].contains("13")) {
             throw new HotelExcepcion(4);
         }
         if (datos_separados.length == 4) {
             listservices = getListofServices(datos_separados[3]);
             Room newRoom = new Room(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]), listservices, Enums.StatusRoom.CLEAN, null);
+            if (listRooms.containsKey(newRoom)) {
+                throw new HotelExcepcion(11);
+            }
             listRooms.put(newRoom, customer);
         } else {
             Room newRoom = new Room(Integer.parseInt(datos_separados[1]), Integer.parseInt(datos_separados[2]), Enums.StatusRoom.CLEAN, "EMPTY");
+            if (listRooms.containsKey(newRoom)) {
+                throw new HotelExcepcion(11);
+            }
             listRooms.put(newRoom, customer);
         }
 
@@ -228,11 +237,12 @@ public class Manager_Hotel {
         boolean asigned = false;
         int contador = 0;
 
-        //NO ENTIENDO PORQUE NO ME DEJA IMPLEMENTAR EL EQUALS Y EN EL PROBLEM 01 DA ERROR
         for (Room room : listRooms.keySet()) {
-            if (listRooms.get(room).getIdCustomer() == (customer.getIdCustomer())) {
-
-                throw new HotelExcepcion(8);
+            if (listRooms.get(room).getIdCustomer() != null) {
+                if (listRooms.get(room).getIdCustomer().equals(customer.getIdCustomer())) {
+                    //NO ENTIENDO PORQUE ENTRA EL USER DE LA ROOM1 AL DECIR PROBLEM 001
+                    throw new HotelExcepcion(8);
+                }
             }
         }
         while ((sameCapacity == false) && (contador != listRooms.size())) {
@@ -307,9 +317,12 @@ public class Manager_Hotel {
         if (datos_separados.length != 3) {
             throw new HotelExcepcion(2);
         }
+
         roomFree = getNumberRoomwithParametre(Integer.parseInt(datos_separados[1]));
         customerToLeave = checkCustomerinRoom(roomFree);
-
+        if (customerToLeave.getIdCustomer() == null) {
+            throw new HotelExcepcion(10);
+        }
         if (customerToLeave == null) {
             throw new HotelExcepcion(5);
         }
@@ -356,12 +369,12 @@ public class Manager_Hotel {
         return roomHaveAll;
     }
 
-    public Customer checkCustomerinRoom(Room romBroken) {
+    public Customer checkCustomerinRoom(Room rom) {
 
         Customer customerTochange = new Customer();
 
         for (Room room : listRooms.keySet()) {
-            if (room.getNumberRoom() == romBroken.getNumberRoom()) {
+            if (room.getNumberRoom() == rom.getNumberRoom()) {
                 customerTochange = listRooms.get(room);
             }
         }
@@ -535,7 +548,7 @@ public class Manager_Hotel {
     }
 
     public Queue getListofSkills(String datos) throws HotelExcepcion {
-        
+
         Queue<SkillsWorkers> queue = new LinkedList<>();
         SkillsWorkers skill = SkillsWorkers.BAR;
 
