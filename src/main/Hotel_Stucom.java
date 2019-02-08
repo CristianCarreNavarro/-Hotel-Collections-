@@ -7,6 +7,7 @@ package main;
 
 import ExcepcionHotel.HotelExcepcion;
 import Manager.Manager_Hotel;
+import Manager.ThreadHilo;
 import java.io.File;
 import java.io.IOException;
 
@@ -26,6 +27,7 @@ public class Hotel_Stucom {
         try {
 
            manager.readOrdersHotel(document1);
+         //  Runnable miRunnable = new ThreadHilo()
            manager.readOrdersHotel(document2);
             
         
