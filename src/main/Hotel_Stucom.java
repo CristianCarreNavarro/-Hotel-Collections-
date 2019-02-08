@@ -21,8 +21,8 @@ public class Hotel_Stucom {
      */
     public static void main(String[] args) {
         Manager_Hotel manager = new Manager_Hotel();
-        File document1 = new File("LoadHotel1.txt");
-        File document2 = new File("inputOrders1.txt");
+        File document1 = new File("LoadHotel2.txt");
+        File document2 = new File("inputOrders2.txt");
         try {
 
            manager.readOrdersHotel(document1);

@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.Objects;
 import java.util.Queue;
 
 /**
@@ -13,11 +14,11 @@ import java.util.Queue;
  */
 public final class Worker {
 
-    private int idWorker;
+    private String idWorker;
     private String nameWorker;
     private Queue skills;
 
-    public Worker(int iDWorker, String nameWorker, Queue skills) {
+    public Worker(String iDWorker, String nameWorker, Queue skills) {
         setiDWorker(iDWorker);
         this.nameWorker = nameWorker;
         this.skills = skills;
@@ -27,26 +28,27 @@ public final class Worker {
 
     }
 
-    public Worker(int iDWorker) {
+    public Worker(String iDWorker) {
         this.idWorker = iDWorker;
     }
 
-    public Worker(int iDWorker, String nameWorker) {
+    public Worker(String iDWorker, String nameWorker) {
         this.idWorker = iDWorker;
         this.nameWorker = nameWorker;
 
     }
 
-    public int getiDWorker() {
+    public String getiDWorker() {
         return idWorker;
     }
 
-    public void setiDWorker(int iDWorker) {
+    public void setiDWorker(String iDWorker) {
 
         String STRING_DE_ASOCIACION_NIF = "TRWAGMYFPDXBNJZSQVHLCKE";
         int numberID = Integer.parseInt(String.valueOf(iDWorker));
-        this.idWorker = numberID+STRING_DE_ASOCIACION_NIF.charAt(numberID % 23);
-   
+        this.idWorker = numberID +""+STRING_DE_ASOCIACION_NIF.charAt(numberID % 23);
+
+
     }
 
     public String getNameWorker() {
@@ -63,6 +65,30 @@ public final class Worker {
 
     public void setSkills(Queue skills) {
         this.skills = skills;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Worker other = (Worker) obj;
+        if (!Objects.equals(this.idWorker, other.idWorker)) {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -5,7 +5,7 @@
  */
 package model;
 
-import Manager.Manager_Hotel.StatusRoom;
+import Manager.Enums.StatusRoom;
 
 import java.util.HashSet;
 
@@ -13,7 +13,7 @@ import java.util.HashSet;
  *
  * @author CRISTIAN
  */
-public class Room {
+public class Room implements Comparable<Room>{
 
     private int numberRoom;
     private int capacity;
@@ -82,6 +82,36 @@ public class Room {
         this.capacity = capacity;
     }
 
+    @Override
+    public int compareTo(Room object) {
+        return this.capacity-object.getCapacity();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Room other = (Room) obj;
+        if (this.numberRoom != other.numberRoom) {
+            return false;
+        }
+        return true;
+    }
+
   
 
+    
 }
