@@ -1,4 +1,4 @@
-SPEED 1000
+SPEED 500
 ROOM 001 3 tv,jacuzzi,balcon
 ROOM 002 2 tv,camadoble
 ROOM 003 1 tv,balcon

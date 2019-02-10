@@ -36,6 +36,7 @@ public class Manager_Hotel {
     boolean noMoney = false;
     int money = 1000;
     int days = 0;
+    int speed = 0;
 
     HashMap<Room, Customer> listRooms = new HashMap<>();
 
@@ -57,11 +58,8 @@ public class Manager_Hotel {
      */
     public void readOrdersHotel(File file) throws HotelExcepcion, IOException {
 
-        days++;
         String linea = "";
-        System.out.println(yellow + "=========================================" + resett);
-        System.out.println(yellow + "DAY: " + days + "  ===   Money: " + money + resett);
-        System.out.println(yellow + "=========================================" + resett);
+
         FileReader fr = null;
         BufferedReader br = null;
 
@@ -90,6 +88,14 @@ public class Manager_Hotel {
         }
     }
 
+    public int getMoney() {
+        return money;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+    
     /**
      * Función que realiza una opcion determinada<br>
      * según el primer parametro de un array de String creado mediante el String
@@ -114,6 +120,7 @@ public class Manager_Hotel {
                     if (2 != datos_separados.length) {
                         throw new HotelExcepcion(2);
                     }
+                    speed = Integer.parseInt(datos_separados[1]);
                     System.out.println("\n");
                     break;
 
