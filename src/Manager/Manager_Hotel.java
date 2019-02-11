@@ -39,7 +39,6 @@ public class Manager_Hotel {
     int speed = 0;
 
     HashMap<Room, Customer> listRooms = new HashMap<>();
-
     HashSet<Worker> listWorkers = new HashSet<>();
     HashSet<Worker> listWorkersBussy = new HashSet<>();
     HashSet<Customer> listCustomers = new HashSet<>();
@@ -95,7 +94,7 @@ public class Manager_Hotel {
     public int getSpeed() {
         return speed;
     }
-    
+
     /**
      * Función que realiza una opcion determinada<br>
      * según el primer parametro de un array de String creado mediante el String
@@ -201,6 +200,14 @@ public class Manager_Hotel {
         System.out.println(green + "\n--> new Room added " + datos_separados[1] + " <--" + resett);
     }
 
+    /**
+     * Función que crea un Customer y lo ingresa en la listaCustomers <br>
+     * y luego llama a la funcion asignThe BestRoom donde le asignará la más
+     * adecuada a sus parametros
+     *
+     * @param datos_separados
+     * @throws HotelExcepcion
+     */
     public void insertReservation(String datos_separados[]) throws HotelExcepcion {
 
         HashSet<String> listservices = new HashSet<>();
@@ -238,11 +245,29 @@ public class Manager_Hotel {
 
     }
 
+    /**
+     * Esta Función recibe un Customer en el cual se le asignará la habitación
+     * más adecuada a sus parametros<br>
+     * Si la capcidad del Customer no es igual a la de la habiatacion se le
+     * sumara 1 a su capacidad<br>
+     * hasta asignarle la habitación con esa capacidad<br>
+     * Una vez tenga la misma capacidad se le mirara si esta tiene los servivios
+     * pedidos<br>
+     * Luego llamará a otra función que mostrará el resultado según los
+     * parametros conseguidos en esta.
+     *
+     * @param customer
+     * @return
+     * @throws HotelExcepcion
+     */
+    // TO DO : ORDENANDO LA LISTA ROOM ME AHORRARIA MUCHO CODIGO
     public Room asignTheBestRoom(Customer customer) throws HotelExcepcion {
         Room roomAsign = new Room();
         boolean sameCapacity = false;
         boolean asigned = false;
         int contador = 0;
+
+        int capaCustomer = customer.getCapacityCustomer();
 
         for (Room room : listRooms.keySet()) {
             if (listRooms.get(room).getIdCustomer() != null) {
@@ -276,20 +301,38 @@ public class Manager_Hotel {
                 customer.setCapacityCustomer(customer.getCapacityCustomer() + 1);
             }
         }
-        resultOfAsigned(asigned, roomAsign, customer);
+        customer.setCapacityCustomer(capaCustomer);
+        resultOfAsignedonRoom(asigned, roomAsign, customer);
         return roomAsign;
     }
 
-    public void resultOfAsigned(boolean asigned, Room roomAsign, Customer customer) {
+    /**
+     * Función que te mostrara un mensaje u otro según el boolean pasado como
+     * parametro<br>
+     * en el cual te indicas si esra asignado o no.
+     *
+     * @param asigned
+     * @param roomAsign
+     * @param customer
+     */
+    public void resultOfAsignedonRoom(boolean asigned, Room roomAsign, Customer customer) {
+
         if (asigned == false) {
             System.out.println("\n" + purple + "--> Customer " + customer.getIdCustomer() + " not asigned. You loose 100€ <--" + resett);
             money -= 100;
-            roomAsign = null;
+
         } else {
             System.out.println("\n" + green + "--> Assigned " + customer.getIdCustomer() + " to Room " + roomAsign.getNumberRoom() + " <--" + resett);
         }
     }
 
+    /**
+     * Función que comprueba prepara todos los datos a pasar a la función
+     * asignWorkerOnRoom
+     *
+     * @param datos_separados
+     * @throws HotelExcepcion
+     */
     public void checkRequestOfRoom(String datos_separados[]) throws HotelExcepcion {
 
         Room room = new Room();
@@ -315,6 +358,16 @@ public class Manager_Hotel {
 
     }
 
+    /**
+     * Función que comprueba todos los datos pasados como parametros<br>
+     * si es correcto todo, modifica el status de la habitación y llama a la
+     * función <br>
+     * resultOfCustomer(la cual eliminar el Customer de las listas de Customer)
+     *
+     * @param datos_separados
+     * @return boolean
+     * @throws HotelExcepcion
+     */
     public boolean leaveOfRoom(String datos_separados[]) throws HotelExcepcion {
 
         Room roomFree = new Room();
@@ -324,7 +377,6 @@ public class Manager_Hotel {
         if (datos_separados.length != 3) {
             throw new HotelExcepcion(2);
         }
-
         roomFree = getNumberRoomwithParametre(Integer.parseInt(datos_separados[1]));
         customerToLeave = checkCustomerinRoom(roomFree);
         if (customerToLeave.getIdCustomer() == null) {
@@ -348,18 +400,19 @@ public class Manager_Hotel {
         return noMoney;
     }
 
-    public Room getNumberRoomwithParametre(int number) {
 
-        for (Room room : listRooms.keySet()) {
-            if (room.getNumberRoom() == number) {
-                return room;
-            }
-        }
-        return null;
-    }
 
     //----------------------------------------------------------------------CUSTOMER------------------------------------------------------------------------------------------------------------------------------
     // ***********************************************************************************************************************************
+    /**
+     * Función que comprueba si la Room pasada como parametro tiene todos los
+     * Servicios que quiere el Customer también pasado como parametro
+     * <br> si es así devuelve true sino false.
+     *
+     * @param room1
+     * @param customer
+     * @return boolean
+     */
     public boolean haveALLwantCustomer(Room room1, Customer customer) {
 
         HashSet<String> listservicesofRoom = new HashSet<>();
@@ -376,18 +429,37 @@ public class Manager_Hotel {
         return roomHaveAll;
     }
 
-    public Customer checkCustomerinRoom(Room rom) {
+    /**
+     * Función que te devuelve el Customer dentro de la habitación que tenga el
+     * mismo numero que la habitación pasada como parametro
+     *
+     * @param room
+     * @return Customer
+     */
+    public Customer checkCustomerinRoom(Room room) {
 
         Customer customerTochange = new Customer();
 
-        for (Room room : listRooms.keySet()) {
-            if (room.getNumberRoom() == rom.getNumberRoom()) {
+        for (Room room1 : listRooms.keySet()) {
+            if (room1.getNumberRoom() == room.getNumberRoom()) {
                 customerTochange = listRooms.get(room);
             }
         }
         return customerTochange;
     }
 
+    /**
+     * Función que devuelve true o false <br>
+     * restando o sumando el dinero en la cuenta según si <br>
+     * el Customer está dentro de la lista de Request pendientes muestra un
+     * system out distinto en cada caso y en ambos la habitación es borrada de
+     * la lista de Request pendientes
+     *
+     * @param moneyOfCustomer
+     * @param roomFree
+     * @param customerToLeave
+     * @return boolean
+     */
     public boolean resultOfCustomer(String moneyOfCustomer, Room roomFree, Customer customerToLeave) {
 
         if (listPendingRequest.containsValue(customerToLeave)) {
@@ -410,6 +482,12 @@ public class Manager_Hotel {
 
     //*************************************************WORKERS*******************************************************************************
     //*******************************************************************************************************************************************   
+    /**
+     * Función que comprueba los datos pasados para agregar un Worker
+     *
+     * @param datos_separados
+     * @throws HotelExcepcion
+     */
     public void checkWorker(String datos_separados[]) throws HotelExcepcion {
 
         boolean isDigit = isNumeric(datos_separados[1]);
@@ -431,6 +509,14 @@ public class Manager_Hotel {
         }
     }
 
+    /**
+     * Función que te crea un Worker<br>
+     * modifica su id para que salga con la letra <br>
+     * y te lo ingresa en la lista de Workers
+     *
+     * @param datos_separados
+     * @throws HotelExcepcion
+     */
     public void insertWorker(String datos_separados[]) throws HotelExcepcion {
         checkWorker(datos_separados);
         Queue<Enums> listSkills = getListofSkills(datos_separados[3]);
@@ -442,14 +528,20 @@ public class Manager_Hotel {
 
     }
 
+    /**
+     * Función que te devuelve un Worker que tenga el Skill pasado como
+     * parametro<br>
+     * si no devuelve NULL
+     *
+     * @param skill
+     * @return Worker
+     */
     public Worker findWorkerToThisSkill(SkillsWorkers skill) {
 
         for (Worker worker1 : listWorkers) {
             if (!listWorkersBussy.contains(worker1)) {
                 if (worker1.getSkills().contains(skill)) {
-
                     listWorkersBussy.add(worker1);
-
                     return worker1;
                 }
             }
@@ -457,6 +549,19 @@ public class Manager_Hotel {
         return null;
     }
 
+    /**
+     * Función que asigna a una Room un HashSet de Workers con las Skills
+     * pedidas por el Customer<br>
+     * si no hay ninguno con los Skills pedidos el customer con su Room es
+     * añadido a la lista de Request pendientes<br>
+     * Tambien busca si esa habitacion ya tenia Workers asignados<br>
+     * para que si esa habitación volviera ha hacer una Request introduciria los
+     * que ya estaban(listofWorkerswithThisSkillsAsignedBefore) más los nuevos.
+     *
+     * @param room
+     * @param listofSkillsWantCustomer
+     * @param customer
+     */
     public void asignWorkerOnRoom(Room room, Queue<SkillsWorkers> listofSkillsWantCustomer, Customer customer) {
 
         HashSet<Worker> listofWorkerswithThisSkills = new HashSet<>();
@@ -469,7 +574,6 @@ public class Manager_Hotel {
             worker = findWorkerToThisSkill(skill);
 
             if (worker != null) {
-
                 listofWorkerswithThisSkills.add(worker);
                 System.out.println("\n" + green + "--> Worker " + worker.getNameWorker() + " assigned to Room " + room.getNumberRoom() + "<--" + resett);
             } else {
@@ -487,6 +591,12 @@ public class Manager_Hotel {
 
     //*************************************************OTHERS*******************************************************************************  
     //*****************************************************************************************************************************************
+    /**
+     * Función que comprueba si el String pasado por parametro es un Integer
+     *
+     * @param cadena
+     * @return boolean
+     */
     public static boolean isNumeric(String cadena) {
         boolean result;
         try {
@@ -498,6 +608,10 @@ public class Manager_Hotel {
         return result;
     }
 
+    /**
+     * Función que te muestra por pantalla todas las habitaciones y te muestra
+     * si hay customer o no.
+     */
     public void showHotel() {
 
         System.out.println("\n" + red + "====================================");
@@ -513,6 +627,15 @@ public class Manager_Hotel {
 
     }
 
+    /**
+     * Función que te modifica el Status a Broken de la habitación <br>
+     * comprueba que en esa habitación haya un customer y llama a otra función
+     * donde será asignado a otra habitación<br>
+     * más tarde remplaza la habitación rota con un customer vacio
+     *
+     * @param datos_separados
+     * @throws HotelExcepcion
+     */
     public void resolveProblem(String datos_separados[]) throws HotelExcepcion {
 
         Room romBroken = new Room();
@@ -531,13 +654,20 @@ public class Manager_Hotel {
             throw new HotelExcepcion(7);
         }
         asignTheBestRoom(customerTochange);
+        listRooms.replace(romBroken, customerEmpty);
+        /*
         listRooms.remove(romBroken);
-        listRooms.put(romBroken, customerEmpty);
+        listRooms.put(romBroken, customerEmpty);*/
 
         System.out.println(purple + "--> Room number: " + datos_separados[1] + " set as BROKEN <--" + resett);
 
     }
-
+/**
+ * Función que te devuelve una lista de Enums de  los servicios que són iguales a los parametros pasados.
+ * @param datos
+ * @return HashSet
+ * @throws HotelExcepcion 
+ */
     public HashSet getListofServices(String datos) throws HotelExcepcion {
 
         HashSet<ServiceRooms> list = new HashSet<>();
@@ -553,7 +683,12 @@ public class Manager_Hotel {
         }
         return list;
     }
-
+/**
+ * Función que te devuelveuna Queue con todos los Enum que sean iguales a los parametros pasados.
+ * @param datos
+ * @return Queue
+ * @throws HotelExcepcion 
+ */
     public Queue getListofSkills(String datos) throws HotelExcepcion {
 
         Queue<SkillsWorkers> queue = new LinkedList<>();
@@ -572,4 +707,21 @@ public class Manager_Hotel {
         }
         return queue;
     }
+        /**
+     * Función que devuelve la habitación con el numero de habitacion pasado
+     * como parametro
+     *
+     * @param number
+     * @return Room
+     */
+    public Room getNumberRoomwithParametre(int number) {
+
+        for (Room room : listRooms.keySet()) {
+            if (room.getNumberRoom() == number) {
+                return room;
+            }
+        }
+        return null;
+    }
+
 }

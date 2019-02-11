@@ -13,7 +13,7 @@ import java.util.HashSet;
  *
  * @author CRISTIAN
  */
-public class Room implements Comparable<Room>{
+public class Room implements Comparable<Room> {
 
     private int numberRoom;
     private int capacity;
@@ -46,7 +46,6 @@ public class Room implements Comparable<Room>{
         this.numberRoom = numberRoom;
         this.capacity = capacity;
         this.status = status;
-      
 
     }
 
@@ -81,10 +80,14 @@ public class Room implements Comparable<Room>{
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-
+/**
+ *  Método para comparar la capacidad de cada habitación 
+ * @param object
+ * @return int
+ */
     @Override
     public int compareTo(Room object) {
-        return this.capacity-object.getCapacity();
+        return this.capacity - object.getCapacity();
     }
 
     @Override
@@ -93,6 +96,13 @@ public class Room implements Comparable<Room>{
         return hash;
     }
 
+    /**
+     * Método sobreescrito que devuelve true o false según si la Room tiene el mismo numero
+     * de Habitación
+     *
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -111,7 +121,4 @@ public class Room implements Comparable<Room>{
         return true;
     }
 
-  
-
-    
 }

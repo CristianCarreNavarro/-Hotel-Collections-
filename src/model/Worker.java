@@ -41,7 +41,11 @@ public final class Worker {
     public String getiDWorker() {
         return idWorker;
     }
-
+/**
+ * Método que te modifica el DNI dek Customer añadiendole su letra<br>
+ * mediante un complicado algorithmo
+ * @param iDWorker 
+ */
     public void setiDWorker(String iDWorker) {
 
         String STRING_DE_ASOCIACION_NIF = "TRWAGMYFPDXBNJZSQVHLCKE";
@@ -72,7 +76,11 @@ public final class Worker {
         int hash = 3;
         return hash;
     }
-
+/**
+ * Método sobreescrito que devuelve true o false según si el Worker tiene el mismo id
+ * @param obj
+ * @return boolean
+ */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

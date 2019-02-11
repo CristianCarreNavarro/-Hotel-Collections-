@@ -18,7 +18,11 @@ public class Enums {
 
     public enum ServiceRooms {
         TV, BALCON, CAMADOBLE, JACUZZI, MINIBAR, TELEFONO, SATELITE, SWEET;
-
+/**
+ * Función que te devuelve un Enum igual al String pasado por parametro
+ * @param stringofService
+ * @return ServiceRooms(ENUM)
+ */
         public  ServiceRooms getServiceRoom(String stringofService) {
 
             switch (stringofService.toUpperCase()) {
@@ -57,7 +61,11 @@ public class Enums {
 
     public enum SkillsWorkers {
         MANTENIMIENTO, LIMPIEZA, PISCINA, SPA, BAR, COMIDA, LAVANDERIA;
-    
+    /**
+     * Función que te devuelve un Enum igual al String pasado por parametro
+     * @param stringofSkill
+     * @return SkillsWorkers(ENUM)
+     */
         public  SkillsWorkers getSkillsWorkers(String stringofSkill) {
 
             switch (stringofSkill.toUpperCase()) {

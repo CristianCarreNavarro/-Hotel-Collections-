@@ -30,9 +30,6 @@ public class Hotel_Stucom {
            Runnable miRunnable = new ThreadHilo(document2,manager.getSpeed(),manager);
            Thread miThread = new Thread(miRunnable);
            miThread.start();
-//           manager.readOrdersHotel(document2);
-            
-        //   miThread.start()
         
         
         } catch (HotelExcepcion ex) {

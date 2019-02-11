@@ -31,7 +31,11 @@ public class ThreadHilo implements Runnable {
         this.file = file;
         this.manager = manager;
     }
-
+/**
+ * Función que al llamarla en su contructor recibirá un File el cual lo irá leyendo frase por frase <br>
+ * con el siguiente valor (veloc) le proporcionamos el intervalo de tiempo en realizar esta acción<br>
+ * tambien le pasamos una instancia de la clase Manager para que utilize su función  ToDoWithPhrase con  cada frase.
+ */
     @Override
     public void run() {
         String linea = "";

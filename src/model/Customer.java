@@ -37,7 +37,11 @@ public final class Customer {
     public String getIdCustomer() {
         return idCustomer;
     }
-
+/**
+ * Método que te modifica el DNI dek Customer añadiendole su letra<br>
+ * mediante un complicado algorithmo
+ * @param idCustomer 
+ */
     public void setIdCustomer(String idCustomer) {
 
         String STRING_DE_ASOCIACION_NIF = "TRWAGMYFPDXBNJZSQVHLCKE";
